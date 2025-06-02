@@ -3,11 +3,12 @@ const router = express.Router();
 const userController = require("../controllers/user.controller");
 const { body, validationResult } = require("express-validator");
 const rateLimit = require("express-rate-limit");
+const auth = require("../middlewares/auth");
 
 // Rate limiter para endpoints sensibles
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 5, // máximo 5 peticiones por IP
+  max: 5, // Máximo 5 peticiones por IP
   message: { message: "Too many requests, please try again later." },
 });
 
@@ -40,5 +41,11 @@ router.post("/signup", limiter, signupValidation, validate, userController.signu
 router.post("/login", limiter, userController.login);
 router.post("/forgot-password", limiter, userController.forgotPassword);
 router.post("/reset-password", userController.resetPassword);
+
+// Agrupar rutas admin bajo "/admin"
+router.use("/admin", auth);
+router.get("/admin/pending-users", userController.getPendingUsers);
+router.post("/admin/approve/:id", userController.approveUser);
+router.delete("/admin/reject/:id", userController.rejectUser);
 
 module.exports = router;

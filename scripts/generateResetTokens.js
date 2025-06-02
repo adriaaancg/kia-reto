@@ -1,6 +1,5 @@
-// scripts/generateResetTokens.js
 const crypto = require("crypto");
-const db = require("../database/db"); // Ajusta ruta si necesario
+const db = require("../database/db");
 
 async function generateAndSaveTokenForUser(email) {
   try {

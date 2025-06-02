@@ -1,13 +1,15 @@
 const db = require("../database/db");
 
+// Buscar usuario por username o email
 exports.findByUsernameOrEmail = async (username, email) => {
   const result = await db.query(
-    "SELECT * FROM users WHERE username = $1 OR email = $2",
+    `SELECT * FROM users WHERE username = $1 OR email = $2`,
     [username, email]
   );
   return result.rows[0];
 };
 
+// Crear usuario definitivo
 exports.createUser = async ({ name, firstSurname, secondSurname, username, email, password }) => {
   const result = await db.query(
     `INSERT INTO users (name, first_surname, second_surname, username, email, password)
@@ -18,54 +20,103 @@ exports.createUser = async ({ name, firstSurname, secondSurname, username, email
   return result.rows[0];
 };
 
+// Buscar por username
 exports.findByUsername = async (username) => {
   const result = await db.query(
-    "SELECT * FROM users WHERE username = $1",
+    `SELECT * FROM users WHERE username = $1`,
     [username]
   );
   return result.rows[0];
 };
 
-// NUEVAS FUNCIONES PARA FORGOT PASSWORD
-
-// Buscar usuario por email
+// Buscar por email
 exports.findByEmail = async (email) => {
   const result = await db.query(
-    "SELECT * FROM users WHERE email = $1",
+    `SELECT * FROM users WHERE email = $1`,
     [email]
   );
   return result.rows[0];
 };
 
-// Guardar token y fecha de expiración para recuperación
+// Guardar token de recuperación
 exports.saveResetToken = async (userId, token, expiration) => {
   await db.query(
-    "UPDATE users SET reset_token = $1, reset_token_expiration = $2 WHERE id = $3",
+    `UPDATE users SET reset_token = $1, reset_token_expiration = $2 WHERE id = $3`,
     [token, expiration, userId]
   );
 };
 
-// Buscar usuario por token de reset
+// Buscar usuario por token
 exports.findByResetToken = async (token) => {
   const result = await db.query(
-    "SELECT * FROM users WHERE reset_token = $1",
+    `SELECT * FROM users WHERE reset_token = $1`,
     [token]
   );
   return result.rows[0];
 };
 
-// Actualizar contraseña del usuario
+// Actualizar contraseña
 exports.updatePassword = async (userId, hashedPassword) => {
   await db.query(
-    "UPDATE users SET password = $1 WHERE id = $2",
+    `UPDATE users SET password = $1 WHERE id = $2`,
     [hashedPassword, userId]
   );
 };
 
-// Limpiar token y expiración después de resetear contraseña
+// Limpiar token de recuperación
 exports.clearResetToken = async (userId) => {
   await db.query(
-    "UPDATE users SET reset_token = NULL, reset_token_expiration = NULL WHERE id = $1",
+    `UPDATE users SET reset_token = NULL, reset_token_expiration = NULL WHERE id = $1`,
     [userId]
   );
+};
+
+//////////////////////////////////////////////////
+// USUARIOS PENDIENTES
+//////////////////////////////////////////////////
+
+// Crear usuario pendiente
+exports.createPendingUser = async ({ name, firstSurname, secondSurname, username, email, password }) => {
+  const result = await db.query(
+    `INSERT INTO pending_users (name, first_surname, second_surname, username, email, password)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     RETURNING *`,
+    [name, firstSurname, secondSurname, username, email, password]
+  );
+  return result.rows[0];
+};
+
+// Obtener todos los usuarios pendientes
+exports.getAllPendingUsers = async () => {
+  const result = await db.query(
+    `SELECT * FROM pending_users ORDER BY created_at DESC`
+  );
+  return result.rows;
+};
+
+// Obtener usuario pendiente por ID
+exports.getPendingUserById = async (id) => {
+  const result = await db.query(
+    `SELECT * FROM pending_users WHERE id = $1`,
+    [id]
+  );
+  return result.rows[0];
+};
+
+// Eliminar usuario pendiente (por ID)
+exports.deletePendingUser = async (id) => {
+  await db.query(
+    `DELETE FROM pending_users WHERE id = $1`,
+    [id]
+  );
+};
+
+exports.getPendingUserByUsername = async (username) => {
+  const result = await db.query("SELECT * FROM pending_users WHERE username = $1", [username]);
+  return result.rows[0];
+};
+
+exports.getPendingUserByEmail = async (email) => {
+  const result = await db.query(`SELECT * FROM pending_users WHERE email = $1`, [email]);
+  return result.rows[0];
 };
