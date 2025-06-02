@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./ForgotPassword.css";
+import "../styles/ForgotPassword.css";
 
 export default function ForgotPassword() {
   const videoRef = useRef(null);
@@ -50,6 +50,8 @@ export default function ForgotPassword() {
       if (res.ok) {
         setMessage(data.message || "Email sent. Check your inbox.");
         setEmail("");
+      } else if (res.status === 403) {
+        setError("Your account is still pending administrator approval.");
       } else {
         setError(data.message || "Error sending email.");
       }

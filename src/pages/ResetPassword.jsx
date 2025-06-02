@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import "./ResetPassword.css";
+import "../styles/ResetPassword.css";
 
 export default function ResetPassword() {
   const videoRef = useRef(null);
@@ -77,7 +77,12 @@ export default function ResetPassword() {
         setMessage(data.message || "Password reset successfully. Redirecting...");
         setTimeout(() => navigate("/login"), 3000);
       } else {
-        setError(data.message || "Error resetting password.");
+        // Validación de token expirado o inválido
+        if (res.status === 400 && data.message?.toLowerCase().includes("expired")) {
+          setError("Your reset link is invalid or has expired. Please request a new one.");
+        } else {
+          setError(data.message || "Error resetting password.");
+        }
       }
     } catch {
       setError("Server error. Try again later.");
@@ -88,33 +93,33 @@ export default function ResetPassword() {
 
   return (
     <div className="reset-password-screen">
-        <video
+      <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
         className="reset-password-video"
-        >
+      >
         <source src="assets/kia-bg.mp4" type="video/mp4" />
         Tu navegador no soporta video.
-        </video>
+      </video>
 
-        <div className="reset-password-wrapper">
+      <div className="reset-password-wrapper">
         <img src="assets/kia-logo-white.png" alt="KIA logo" className="reset-password-logo" />
 
         <div className="reset-password-container">
-            <h2 className="reset-password-title">Reset Password</h2>
+          <h2 className="reset-password-title">Reset Password</h2>
 
-            {(error || message) && (
+          {(error || message) && (
             <p className={`reset-password-message ${message ? "success" : "error"}`}>
-                {message || error}
+              {message || error}
             </p>
-            )}
+          )}
 
-            {!message && token && (
+          {!message && token && (
             <form className="reset-password-form" onSubmit={handleSubmit}>
-                <input
+              <input
                 type="password"
                 placeholder="New password"
                 className="reset-password-input"
@@ -124,8 +129,8 @@ export default function ResetPassword() {
                 required
                 minLength={6}
                 aria-label="New password"
-                />
-                <input
+              />
+              <input
                 type="password"
                 placeholder="Confirm new password"
                 className="reset-password-input"
@@ -135,18 +140,18 @@ export default function ResetPassword() {
                 required
                 minLength={6}
                 aria-label="Confirm new password"
-                />
-                <button
+              />
+              <button
                 type="submit"
                 className="reset-password-button"
                 disabled={loading}
-                >
+              >
                 {loading ? "Resetting..." : "Reset Password"}
-                </button>
+              </button>
             </form>
-            )}
+          )}
         </div>
-        </div>
+      </div>
     </div>
   );
 }

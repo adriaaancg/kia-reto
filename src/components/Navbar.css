@@ -1,0 +1,32 @@
+.navbar {
+  width: 100%;
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-logo {
+  height: 40px;
+}
+
+.navbar-user {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.navbar-logout {
+  padding: 8px 15px;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}

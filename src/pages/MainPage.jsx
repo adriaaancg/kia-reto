@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './MainPage.css';
+import '../styles/MainPage.css';
 
 export default function MainPage() {
   const navigate = useNavigate();
