@@ -5,7 +5,7 @@ import "../styles/SessionStarted.css";
 
 export default function SessionStarted() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -20,6 +20,9 @@ export default function SessionStarted() {
         const res = await axiosInstance.get("/dashboard", {
           headers: { Authorization: `Bearer ${token}` },
         });
+
+        console.log(res.data.user);
+
         setUser(res.data.user);
       } catch (err) {
         console.error("Unauthorized access:", err);
@@ -74,7 +77,7 @@ export default function SessionStarted() {
       <div className="session-main-text">
         <img src="/assets/kia-logo-white.png" alt="KIA" />
 
-        <h1 className="session-title">Bienvenido, {user.username}</h1>
+        <h1 className="session-title">Bienvenido, {user.name}</h1>
         <p className="session-subtitle">¿Qué deseas hacer hoy?</p>
 
       </div>
