@@ -33,13 +33,19 @@
 
 .buttons-session button{
   padding: 12px 25px;
-  background: rgba(0, 0, 0, 0.697);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
   margin-left: 20px;
+  transition: 500ms;
+}
+
+.buttons-session button:hover{
+  background: rgb(0, 0, 0);
+  transform: translateY(-3px);
 }
 
 .session-container {
