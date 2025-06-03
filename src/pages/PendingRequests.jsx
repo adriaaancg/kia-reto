@@ -48,9 +48,7 @@ export default function PendingRequests() {
 
   return (
     <div className="pending-screen">
-      
-
-      <Navbar username={user.username} />
+      <Navbar/>
 
       <div className="pending-container">
         <h1 className="pending-title">Solicitudes Pendientes</h1>
