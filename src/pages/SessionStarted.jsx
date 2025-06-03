@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
-import Navbar from "../components/Navbar";
 import "../styles/SessionStarted.css";
 
 export default function SessionStarted() {
@@ -43,6 +42,11 @@ export default function SessionStarted() {
     return () => video.removeEventListener("timeupdate", onTimeUpdate);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   if (!user) return null;
 
   return (
@@ -63,7 +67,7 @@ export default function SessionStarted() {
 
       <div className="buttons-session">
         <button>Cuenta</button>
-        <button>Cerrar sesión</button>
+        <button onClick={handleLogout}>Cerrar sesión</button>
       </div>
 
 
