@@ -42,6 +42,9 @@ router.post("/login", limiter, userController.login);
 router.post("/forgot-password", limiter, userController.forgotPassword);
 router.post("/reset-password", userController.resetPassword);
 
+// Nueva ruta para obtener los datos del usuario logueado
+router.get("/me", auth, userController.getUserData); // Ruta para obtener datos del usuario
+
 // Agrupar rutas admin bajo "/admin"
 router.use("/admin", auth);
 router.get("/admin/pending-users", userController.getPendingUsers);

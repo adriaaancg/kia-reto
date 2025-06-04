@@ -109,8 +109,9 @@ exports.login = async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      token
+      token,
     });
+
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ message: "Server error" });
@@ -237,5 +238,19 @@ exports.rejectUser = async (req, res) => {
   } catch (error) {
     console.error("Error rejecting user:", error);
     res.status(500).json({ message: "Error rejecting user" });
+  }
+};
+
+// Obtener los datos del usuario logueado
+exports.getUserData = async (req, res) => {
+  try {
+    const user = await userModel.findByUsername(req.user.username); // Usamos el username del token decodificado
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user); // Devuelve los datos del usuario
+  } catch (err) {
+    console.error("Error fetching user data:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
