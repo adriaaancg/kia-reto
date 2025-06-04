@@ -1,32 +1,34 @@
 .waste-registry-screen {
-  position: fixed;
-  top: 0; left: 0;
+  position: relative;
   width: 100vw;
   height: 100vh;
-  background: black;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 0;
+  background-color: black;
 }
 
-.waste-registry-video {
+.waste-registry-screen::before {
+  content: "";
   position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('https://img.asmedia.epimg.net/resizer/v2/WXI4SA45SFAAFOKKCV3HVVV27I.jpg?auth=21a536f18c75f69aa1d54e8f6bea5c246b3d67642a99334440ab85af6c352ef0&width=1952&height=1098&smart=true');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
   z-index: -1;
-  top: 0;
-  left: 0;
 }
 
 .waste-registry-container {
   background-color: rgba(255, 255, 255, 0.95);
   margin-top: 100px;
+  margin-bottom: 40px;
   padding: 40px;
   border-radius: 25px;
   max-width: 90%;
-  width: 1100px;
+  width: 1700px;
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
   z-index: 1;
   overflow-y: auto;
@@ -39,33 +41,51 @@
   font-weight: 700;
 }
 
-.waste-registry-table-wrapper {
-  overflow-x: auto;
-  max-height: 400px;
+.waste-registry-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
 }
 
-.waste-registry-table {
-  width: 100%;
-  border-collapse: collapse;
+.waste-registry-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.waste-registry-form label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.waste-registry-form input[type="text"],
+.waste-registry-form input[type="date"],
+.waste-registry-form input[type="number"],
+.waste-registry-form select {
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
   font-size: 0.95rem;
+  background-color: white;
+  transition: border-color 0.2s ease;
 }
 
-.waste-registry-table thead {
-  background-color: #222;
-  color: white;
+.waste-registry-form input[type="text"]:focus,
+.waste-registry-form input[type="date"]:focus,
+.waste-registry-form input[type="number"]:focus,
+.waste-registry-form select:focus {
+  border-color: #444;
+  outline: none;
 }
 
-.waste-registry-table th,
-.waste-registry-table td {
-  padding: 12px 16px;
-  text-align: left;
-  border: 1px solid #ccc;
+.waste-registry-form .checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.waste-registry-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.waste-registry-table tbody tr:hover {
-  background-color: #e0e0e0;
+.waste-registry-form .checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
