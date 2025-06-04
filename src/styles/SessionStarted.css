@@ -9,23 +9,22 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  align-items: center;
-  justify-content: center; 
   padding-top: 70px;
-  padding-bottom: 70px; 
+  padding-bottom: 70px;
   min-height: calc(100vh - 70px);
   box-sizing: border-box;
   background: transparent;
 }
 
 .session-video {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 100vw;
+  min-height: 100vh;
   object-fit: cover;
   z-index: -1;
-  top: 0;
-  left: 0;
   filter: none;
 }
 
@@ -36,10 +35,10 @@
   padding: 0 20px;
   width: 100%;
   box-sizing: border-box;
-  user-select: text; 
+  user-select: text;
 }
 
-.buttons-session button{
+.buttons-session button {
   padding: 12px 25px;
   background: rgba(0, 0, 0, 0.5);
   color: white;
@@ -71,14 +70,14 @@
   align-items: center;
 }
 
-.session-main-text{
+.session-main-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 }
 
-.session-main-text img{
+.session-main-text img {
   height: 60px;
   width: auto;
   margin-bottom: 80px;
@@ -99,24 +98,28 @@
 
 .session-cards {
   display: flex;
-  gap: 20px;
+  gap: 25px;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .session-card {
   background: white;
   border-radius: 20px;
-  padding: 30px 20px;
-  width: 150px;
-  height: 180px;
+  padding: 25px 20px;
+  width: 180px;
+  height: auto;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .session-card:hover {
@@ -130,10 +133,19 @@
   margin-bottom: 15px;
 }
 
-.session-card span {
-  font-size: 1rem;
-  font-weight: 600;
+.session-card h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
   color: black;
+}
+
+.session-card p {
+  font-size: 0.95rem;
+  color: #444;
+  text-align: center;
+  margin: 0;
 }
 
 .session-dashboard {
@@ -145,13 +157,14 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
+/* Responsivo */
 @media (max-width: 768px) {
   .session-cards {
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 
   .session-card {
-    width: 80%;
+    width: 90%;
   }
 }
