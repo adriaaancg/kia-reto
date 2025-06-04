@@ -5,20 +5,22 @@ import "./Navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [loggedUser, setUser] = useState(null);
+  const [loggedUser, setUser] = useState("");
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUserAndRequests = async () => {
       try {
         const res = await axiosInstance.get("/dashboard");
-        setUser(res.data.user);
+        const loggedUser = res.data.user;
+        setUser(loggedUser);
+
       } catch (err) {
         localStorage.removeItem("token");
         navigate("/login");
       }
     };
 
-    fetchUser();
+    fetchUserAndRequests();
   }, [navigate]);
 
   const handleLogout = () => {
@@ -26,36 +28,25 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  if (!loggedUser) return null;
-
-  const isAdmin = loggedUser.username === "01234644";
-
   return (
     <nav className="navbar">
-      <div className="navbar-left">
-        <img src="/assets/kia-logo-white.png" alt="KIA" className="navbar-logo" />
-        <span className="navbar-username">{loggedUser.username}</span>
+      <div className="navbar-logo">
+        <img src="/assets/kia-logo-white.png" alt="KIA" style={{height: "40px"}} />
+        <p>Hello, {loggedUser.name} {loggedUser.surname}</p>
       </div>
 
-      <div className="navbar-center">
-        {isAdmin ? (
-          <>
-            <Link to="/pending-requests">Requests</Link>
-            <Link to="/waste-registry">Registry</Link>
-            <Link to="/waste-history">History</Link>
-            <Link to="/waste-registry-confirmed">Confirmed</Link>
-            <Link to="/waste-dashboard">Dashboards</Link>
-            <button className="navbar-logout" onClick={handleLogout}>Log Out</button>
-          </>
-        ) : (
-          <>
-            <Link to="/waste-registry">Registry</Link>
-            <Link to="/waste-history">History</Link>
-            <Link to="/waste-dashboard">Dashboards</Link>
-            <button className="navbar-logout" onClick={handleLogout}>Log Out</button>
-          </>
-        )}
+      <div className="navbar-routes">
+        <div className="pages"> 
+          <Link to="/waste-registry">Log Waste</Link>
+          <Link to="/waste-history">Waste History</Link>
+          <Link to="/waste-dashboard">Dashboards</Link>
+          <Link to="/pending-requests">Pending Users</Link>
+
+        </div>
+        
+        <button className="navbar-logout" onClick={handleLogout}>Cerrar sesión</button>
       </div>
+      
     </nav>
   );
 }
