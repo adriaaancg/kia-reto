@@ -28,3 +28,4 @@ export default function PendingUserCard({ user, onDecision }) {
     </div>
   );
 }
+

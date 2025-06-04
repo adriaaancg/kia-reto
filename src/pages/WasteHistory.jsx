@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import axiosInstance from "../utils/axiosInstance";
 import "../styles/WasteHistory.css";
+import PendingRegistryCard from "../components/PendingRegistryCard"; 
+
 
 export default function WasteHistory() {
   const videoRef = useRef(null);
@@ -33,52 +35,43 @@ export default function WasteHistory() {
     fetchRecords();
   }, []);
 
+  // test
+  const registroPendiente = {
+    id: 1,
+    entry_date: "2025-06-01",
+    exit_date: "2025-06-03",
+    type: "Trapo .. ",
+    amount: 0.05,
+    container: "Tambo",
+    area: "Welding",
+    art71: "123ABC",
+    reason_art71: " XYZ",
+    aut_semarnat: "ABC123",
+    aut_SCT: "SCT999",
+    reason_destination: "ABC",
+    aut_destination: "DEST001",
+    chemicals: ["C", "R"],
+    responsible: "Yamileth"
+  };
+
+  // funciones temporales
+  const handleConfirm = (id) => console.log(`Confirmar: ${id}`);
+  const handleEdit = (id) => console.log(`Editar: ${id}`);
+  const handleDelete = (id) => console.log(`Eliminar: ${id}`);
+
   return (
     <div className="history-screen">
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="history-video"
-      >
-        <source src="assets/kia-bg.mp4" type="video/mp4" />
-        Tu navegador no soporta video.
-      </video>
 
       <Navbar />
 
       <div className="history-container">
-        <h1>Historial de Residuos</h1>
-        <div className="history-table-wrapper">
-          <table className="history-table">
-            <thead>
-              <tr>
-                <th>Entrada</th>
-                <th>Salida</th>
-                <th>Tipo</th>
-                <th>Cantidad (kg)</th>
-                <th>Área</th>
-                <th>SEMARNAT</th>
-                <th>Responsable</th>
-              </tr>
-            </thead>
-            <tbody>
-              {records.map((r, index) => (
-                <tr key={index}>
-                  <td>{r.entry_date}</td>
-                  <td>{r.exit_date}</td>
-                  <td>{r.type}</td>
-                  <td>{r.amount}</td>
-                  <td>{r.area}</td>
-                  <td>{r.aut_semarnat}</td>
-                  <td>{r.responsible}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <h1 className="history-title">Historial de Residuos</h1>
+          <PendingRegistryCard
+            registry={registroPendiente}
+            onConfirm={handleConfirm}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
       </div>
     </div>
   );
