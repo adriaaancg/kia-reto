@@ -99,7 +99,7 @@ export default function SessionStarted() {
       </video>
 
       <div className="session-main-text">
-        <h1 className="session-title">Bienvenido, {user.username}!</h1>
+        <h1 className="session-title">Bienvenido, {user.name}!</h1>
         <p className="session-subtitle">Gestiona eficientemente residuos peligrosos y monitorea KPIs en tiempo real.</p>
       </div>
 

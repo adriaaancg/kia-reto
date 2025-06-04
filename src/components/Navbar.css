@@ -2,7 +2,7 @@
   width: 100%;
   background-color: rgba(0,0,0,0.85);
   color: white;
-  padding: 10px 30px;
+  padding: 25px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,46 +11,64 @@
   z-index: 100;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 1rem;
 }
 
 /* Izquierda: logo y username */
-.navbar-left {
+.navbar-logo {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
   flex-shrink: 0;
 }
 
-/* Centro: links de navegación + botón Log Out */
-.navbar-center {
+.navbar-logo img {
+  height: 40px;
+  user-select: none;
+}
+
+.navbar-logo p {
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Derecha: links + botón logout */
+.navbar-routes {
   display: flex;
   align-items: center;
-  gap: 20px; /* Espacio uniforme entre elementos */
+  gap: 30px;
   white-space: nowrap;
   font-weight: 600;
   justify-content: flex-end;
   flex-grow: 1;
 }
 
-/* Logo */
-.navbar-logo {
-  height: 40px;
-  user-select: none;
+/* Contenedor de links */
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-/* Username */
-.navbar-username {
-  white-space: nowrap;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #ffffff;
+/* Links */
+.pages a {
+  color: white;
+  text-decoration: none;
+  padding: 4px 8px;
+  transition: color 0.2s ease;
 }
 
-/* Botón logout (ahora dentro de navbar-center) */
-.navbar-center .navbar-logout {
-  padding: 6px 18px;
+.pages a:hover {
+  color: #5ccbff;
+}
+
+/* Botón logout */
+.navbar-logout {
+  padding: 12px 18px;
   background: white;
   color: black;
   border: none;
@@ -60,19 +78,7 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.navbar-center .navbar-logout:hover {
+.navbar-logout:hover {
   background-color: #5ccbff;
   color: white;
-}
-
-/* Links */
-.navbar-center a {
-  color: white;
-  text-decoration: none;
-  padding: 4px 8px;
-  transition: color 0.2s ease;
-}
-
-.navbar-center a:hover {
-  color: #5ccbff;
 }
